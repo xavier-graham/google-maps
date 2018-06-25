@@ -35,6 +35,12 @@
                },
                 map: map
             });
+
+            var infowindow = new google.maps.InfoWindow ({
+               content: "Rainforest Cafe"
+            });
+
+            infowindow.open(map, marker);
         }
 
     </script>
