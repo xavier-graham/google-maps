@@ -7,68 +7,118 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Google Maps API</title>
     <style>
-        #map-canvas {
+        #map_canvas {
             height: 600px;
         }
     </style>
 </head>
 <body>
     <!-- Div to hold map -->
-    <div id="map-canvas"></div>
+    <div id="map_canvas"></div>
     <script>
 
+
         function initMap() {
-            var mapCanvas = document.getElementById('map-canvas');
+            var map;
+            var bounds = new google.maps.LatLngBounds();
             var mapOptions = {
-                zoom: 20,
-                center: {
-                    lat: 29.424950,
-                    lng: -98.488140
-                }
+                zoom: 20
             };
-            var map = new google.maps.Map(mapCanvas, mapOptions);
 
-            // Info Window
-
-
+            // Display a map on the page
+            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
 
-            var marker = new google.maps.Marker({
-               position: {
-                   lat: 29.424950,
-                   lng: -98.488140
-               },
-                map: map,
-                animation: google.maps.Animation.DROP
+            // Multiple Markers
+            var markers = [
+                ['Rainforest Cafe, San Antonio, TX', 29.424950, -98.488140],
+                ['The Cove, San Antonio, TX', 29.440453, -98.500535],
+                ['Texas de Brazil, San Antonio, TX', 29.426755, -98.488970]
+            ];
+
+            // var marker = new google.maps.Marker({
+            //    position: {
+            //        lat: 29.424950,
+            //        lng: -98.488140
+            //    },
+            //     map: map,
+            //     animation: google.maps.Animation.DROP
+            // });
+
+            // Info Window Content
+            var infowindowContent = [
+                ['<div class="info_content">' +
+                "<h1>Rainforest Cafe</h1>\n" +
+                "<p>Rainforest-themed chain for American fare & cocktails amid jungle flora & animatronic animals</p>" +
+                "<p><strong>Address:</strong> 110 E Crockett St, San Antonio, TX 78205</p>" + '</div>'],
+
+                ['<div class="info_content">' +
+                "<h1>The Cove</h1>\n" +
+                "<p>Quirky kid-friendly venue with organic American fare, live music, a laundromat & car wash.</p>" +
+                "<p><strong>Address:</strong> 606 W Cypress St, San Antonio, TX 78212</p>" + '</div>'],
+
+                ['<div class="info_content">' +
+                "<h1>Texas de Brazil</h1>\n" +
+                "<p>Upscale Brazilian eatery featuring all-you-can-eat grilled meat carved tableside & a salad bar.</p>" +
+                "<p><strong>Address:</strong> 313 E Houston St, San Antonio, TX 78205</p>" + '</div>']
+            ];
+
+            // new google.maps.InfoWindow ({
+            // });
+
+            // Display multiple markers on a map
+            var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+            // Loop through our array of markers & plaec each one on the map
+            for (i = 0; i < markers.length; i++) {
+                var position = new google.maps.LatLng(markers[i][1], markers[i][2], markers [i][3]);
+                bounds.extend(position);
+                marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: markers[i][0]
+                });
+
+                // Allow each marker to have an info window
+                google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                    return function() {
+                        infoWindow.setContent(infowindowContent[i][0]);
+                        infoWindow.open(map, marker);
+                    }
+                })(marker, i));
+
+                //Auto center map to fit all markers on screen
+                map.fitBounds(bounds);
+            }
+
+            // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+            var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+                this.setZoom(20);
+                google.maps.event.removeListener(boundsListener);
             });
 
-            marker.addListener('click', function () {
-                if (marker.getAnimation() !== null) {
-                    marker.setAnimation(null);
-                } else {
-                    marker.setAnimation(google.maps.Animation.BOUNCE);
-                }
-            });
 
-            var infowindow = new google.maps.InfoWindow ({
-               content: "<h1>Rainforest Cafe</h1>\n" +
-                        "<p>Rainforest-themed chain for American fare & cocktails amid jungle flora & animatronic animals</p>" +
-                        "<p><strong>Address:</strong> 110 E Crockett St, San Antonio, TX 78205</p>"
-            });
 
-            // infowindow.open(map, marker);
-            map.addListener('click', function () {
-               if(!marker.open){
-                   infowindow.open(map, marker);
-                   marker.open = true;
-               } else {
-                   infowindow.close();
-                   marker.open = false;
-               }
-            });
+            // marker.addListener('click', function () {
+            //     if (marker.getAnimation() !== null) {
+            //         marker.setAnimation(null);
+            //     } else {
+            //         marker.setAnimation(google.maps.Animation.BOUNCE);
+            //     }
+            // });
+            //
+            //
+            // // infowindow.open(map, marker);
+            // map.addListener('click', function () {
+            //    if(!marker.open){
+            //        infowindow.open(map, marker);
+            //        marker.open = true;
+            //    } else {
+            //        infowindow.close();
+            //        marker.open = false;
+            //    }
+            // });
         }
-
-            var arr = [{rainforestCafe},{theCove},{texasDeBrazil}];
     </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxIPbNd4ljI6NdSyP5ugk4XoKDzw2VEZM&callback=initMap" async defer></script>
