@@ -76,8 +76,10 @@
                 marker = new google.maps.Marker({
                     position: position,
                     map: map,
-                    title: markers[i][0]
+                    title: markers[i][0],
+                    animation: google.maps.Animation.DROP
                 });
+                marker.addListener('click', toggleBounce);
 
                 // Allow each marker to have an info window
                 google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -89,6 +91,14 @@
 
                 //Auto center map to fit all markers on screen
                 map.fitBounds(bounds);
+            }
+
+            function toggleBounce() {
+                if (marker.getAnimation() !== null) {
+                    marker.setAnimation(null);
+                } else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                }
             }
 
             // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
