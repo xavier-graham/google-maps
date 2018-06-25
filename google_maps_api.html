@@ -23,7 +23,7 @@
             var map;
             var bounds = new google.maps.LatLngBounds();
             var mapOptions = {
-                zoom: 20
+                zoom: 15
             };
 
             // Display a map on the page
@@ -67,6 +67,10 @@
                     map: map,
                     title: markers[i][0],
                     animation: google.maps.Animation.DROP,
+                    icon: {
+                        url: 'img/fork_knife.svg',
+                        scaledSize: new google.maps.Size(32, 32)
+                    }
                 });
 
                 marker.addListener('click', toggleBounce);
