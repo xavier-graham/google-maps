@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Google Maps API</title>
+    <style>
+        #map-canvas {
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Div to hold map -->
+    <div id="map-canvas"></div>
+    <script>
+
+        function initMap() {
+            var mapCanvas = document.getElementById('map-canvas');
+            var mapOptions = {
+                zoom: 20,
+                center: {
+                    lat: 29.424950,
+                    lng: -98.488140
+                }
+            };
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+        }
+
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxIPbNd4ljI6NdSyP5ugk4XoKDzw2VEZM&callback=initMap" async defer></script>
+</body>
+</html>
