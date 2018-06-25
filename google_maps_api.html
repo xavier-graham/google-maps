@@ -28,6 +28,8 @@
             };
             var map = new google.maps.Map(mapCanvas, mapOptions);
 
+            // Info Window
+
             var marker = new google.maps.Marker({
                position: {
                    lat: 29.424950,
@@ -42,7 +44,16 @@
                         "<p><strong>Address:</strong> 110 E Crockett St, San Antonio, TX 78205</p>"
             });
 
-            infowindow.open(map, marker);
+            // infowindow.open(map, marker);
+            map.addListener('click', function () {
+               if(!marker.open){
+                   infowindow.open(map, marker);
+                   marker.open = true;
+               } else {
+                   infowindow.close();
+                   marker.open = false;
+               }
+            });
         }
 
     </script>
