@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Google Maps API</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <style>
         #map_canvas {
             height: 600px;
@@ -17,7 +18,7 @@
     <div id="map_canvas"></div>
     <script>
 
-
+        // Initialize a Map
         function initMap() {
             var map;
             var bounds = new google.maps.LatLngBounds();
@@ -35,15 +36,6 @@
                 ['The Cove, San Antonio, TX', 29.440453, -98.500535],
                 ['Texas de Brazil, San Antonio, TX', 29.426755, -98.488970]
             ];
-
-            // var marker = new google.maps.Marker({
-            //    position: {
-            //        lat: 29.424950,
-            //        lng: -98.488140
-            //    },
-            //     map: map,
-            //     animation: google.maps.Animation.DROP
-            // });
 
             // Info Window Content
             var infowindowContent = [
@@ -63,13 +55,10 @@
                 "<p><strong>Address:</strong> 313 E Houston St, San Antonio, TX 78205</p>" + '</div>']
             ];
 
-            // new google.maps.InfoWindow ({
-            // });
-
             // Display multiple markers on a map
             var infoWindow = new google.maps.InfoWindow(), marker, i;
 
-            // Loop through our array of markers & plaec each one on the map
+            // Loop through our array of markers & place each one on the map
             for (i = 0; i < markers.length; i++) {
                 var position = new google.maps.LatLng(markers[i][1], markers[i][2], markers [i][3]);
                 bounds.extend(position);
@@ -77,9 +66,11 @@
                     position: position,
                     map: map,
                     title: markers[i][0],
-                    animation: google.maps.Animation.DROP
+                    animation: google.maps.Animation.DROP,
                 });
+
                 marker.addListener('click', toggleBounce);
+
 
                 // Allow each marker to have an info window
                 google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -89,9 +80,11 @@
                     }
                 })(marker, i));
 
+
                 //Auto center map to fit all markers on screen
                 map.fitBounds(bounds);
             }
+
 
             function toggleBounce() {
                 if (marker.getAnimation() !== null) {
@@ -101,36 +94,18 @@
                 }
             }
 
+
             // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
             var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
                 this.setZoom(20);
                 google.maps.event.removeListener(boundsListener);
             });
-
-
-
-            // marker.addListener('click', function () {
-            //     if (marker.getAnimation() !== null) {
-            //         marker.setAnimation(null);
-            //     } else {
-            //         marker.setAnimation(google.maps.Animation.BOUNCE);
-            //     }
-            // });
-            //
-            //
-            // // infowindow.open(map, marker);
-            // map.addListener('click', function () {
-            //    if(!marker.open){
-            //        infowindow.open(map, marker);
-            //        marker.open = true;
-            //    } else {
-            //        infowindow.close();
-            //        marker.open = false;
-            //    }
-            // });
         }
-    </script>
 
+
+
+
+    </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxIPbNd4ljI6NdSyP5ugk4XoKDzw2VEZM&callback=initMap" async defer></script>
 </body>
 </html>
