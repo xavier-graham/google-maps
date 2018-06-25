@@ -35,7 +35,16 @@
                    lat: 29.424950,
                    lng: -98.488140
                },
-                map: map
+                map: map,
+                animation: google.maps.Animation.DROP
+            });
+
+            marker.addListener('click', function () {
+                if (marker.getAnimation() !== null) {
+                    marker.setAnimation(null);
+                } else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                }
             });
 
             var infowindow = new google.maps.InfoWindow ({
