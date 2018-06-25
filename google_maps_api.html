@@ -73,7 +73,7 @@
                     }
                 });
 
-                marker.addListener('click', toggleBounce);
+                // marker.addListener('click', toggleBounce);
 
 
                 // Allow each marker to have an info window
@@ -81,6 +81,7 @@
                     return function() {
                         infoWindow.setContent(infowindowContent[i][0]);
                         infoWindow.open(map, marker);
+                        toggleBounce(marker)
                     }
                 })(marker, i));
 
@@ -90,7 +91,7 @@
             }
 
 
-            function toggleBounce() {
+            function toggleBounce(marker) {
                 if (marker.getAnimation() !== null) {
                     marker.setAnimation(null);
                 } else {
