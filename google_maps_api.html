@@ -20,10 +20,12 @@
 
         // Initialize a Map & Display on page
         function initMap() {
-            var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions)
+            var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
             var bounds = new google.maps.LatLngBounds();
+
+
             var mapOptions = {
-                zoom: 15
+                // zoom: 15
             };
 
 
@@ -83,7 +85,7 @@
                 })(marker, i));
 
 
-                //Auto center map to fit all markers on screen
+                // Auto center map to fit all markers on screen
                 map.fitBounds(bounds);
             }
 
@@ -124,6 +126,6 @@
         }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxIPbNd4ljI6NdSyP5ugk4XoKDzw2VEZM&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCxIPbNd4ljI6NdSyP5ugk4XoKDzw2VEZM&callback=initMap"></script>
 </body>
 </html>
