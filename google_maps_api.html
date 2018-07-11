@@ -18,16 +18,13 @@
     <div id="map_canvas"></div>
     <script>
 
-        // Initialize a Map
+        // Initialize a Map & Display on page
         function initMap() {
-            var map;
+            var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions)
             var bounds = new google.maps.LatLngBounds();
             var mapOptions = {
                 zoom: 15
             };
-
-            // Display a map on the page
-            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
 
             // Multiple Markers
